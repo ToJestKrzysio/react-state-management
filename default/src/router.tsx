@@ -1,14 +1,20 @@
 import {createBrowserRouter, Outlet} from "react-router-dom";
-import Navbar from "./components/Navbar.tsx";
+import Navbar from "./components/Navbar";
 import {Counter, Form, Home} from "./views";
+import {CountContextProvider} from "./context/useCount.ts";
+import {useState} from "react";
 
 
 function Root() {
+    const [count, setCount] = useState<number>(0)
     return (
-        <div className="flex flex-col w-screen h-screen bg-gray-900">
-            <Navbar/>
-            <Outlet/>
-        </div>
+        <CountContextProvider value={{count, setCount}}>
+            <div className="flex h-screen w-screen flex-col bg-gray-900">
+                <Navbar/>
+                <Outlet/>
+            </div>
+        </CountContextProvider>
+
     )
 }
 
@@ -18,15 +24,15 @@ export default createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Home />,
+                element: <Home/>,
             },
             {
                 path: "/counter/",
-                element: <Counter />,
+                element: <Counter/>,
             },
             {
                 path: "/form/",
-                element: <Form />
+                element: <Form/>
             }
         ]
     }

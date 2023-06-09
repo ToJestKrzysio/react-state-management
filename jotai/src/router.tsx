@@ -5,7 +5,7 @@ import {Counter, Form, Home} from "./views";
 
 function Root() {
     return (
-        <div className="flex flex-col w-screen h-screen bg-gray-900">
+        <div className="flex h-screen w-screen flex-col bg-gray-900">
             <Navbar/>
             <Outlet/>
         </div>

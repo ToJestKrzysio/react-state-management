@@ -1,3 +1,3 @@
 export default function Form() {
-    return <h1 className="flex w-full h-full justify-center items-center text-white text-4xl">Form</h1>
+    return <h1 className="flex h-full w-full items-center justify-center text-4xl text-white">Form</h1>
 }
