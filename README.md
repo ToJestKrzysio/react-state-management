@@ -11,3 +11,9 @@ This is simple repository aimed to compare user state management solutions for r
 * Counter sharing state between two views
 * Form with state stored in URL
 * Communication with API
+
+
+## New state management installs
+* `npm install react-router-dom localforage match-sorter sort-by`
+* `npm install -D tailwindcss postcss autoprefixer`
+* `npx tailwindcss init -p`
