@@ -1,28 +1,24 @@
 import {FieldError, useForm, UseFormRegisterReturn} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {z} from "zod"
 import {ForwardedRef, forwardRef, HTMLInputTypeAttribute, useId} from "react";
+import {UserData, userDataValidator} from "../types.ts";
+import {useUserContext} from "../context/useUser.ts";
 
-const formData = z.object({
-    firstName: z.string().nonempty(),
-    age: z.coerce.number().gt(0),
-})
-type FormData = z.infer<typeof formData>
 
 export default function Form() {
+    const {user, setUser} = useUserContext();
     const {
         register,
         handleSubmit,
         formState: {errors}
-    } = useForm<FormData>({
-        resolver: zodResolver(formData)
+    } = useForm<UserData>({
+        resolver: zodResolver(userDataValidator),
+        defaultValues: user || {firstName: "", age: NaN},
     })
-
-    const onSubmit = (data: FormData) => console.log(data)
 
     return (
         <div className="flex h-full w-full items-center justify-center text-white">
-            <form className="flex flex-col gap-y-2 w-[500px]" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col gap-y-2 w-[500px]" onSubmit={handleSubmit(setUser)}>
                 <Input label="First Name" error={errors.firstName} {...register("firstName")}/>
                 <Input type="number" label="Age" error={errors.age} {...register("age")}/>
 
@@ -62,7 +58,7 @@ const Input = forwardRef(function <T extends string>(
                     <label htmlFor={id} className="text-sm">{label}</label>
                 </legend>
                 <input {...others} id={id} type={type}
-                       className="bg-transparent pb-2 outline-none text-white"
+                       className="w-full bg-transparent pb-2 outline-none text-white"
                 />
             </fieldset>
             <span className="flex h-5 items-center text-red-500">{error && error.message}</span>
