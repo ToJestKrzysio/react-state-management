@@ -1,7 +1,8 @@
 import { StateCreator, create } from "zustand";
+import { UserData } from "./types";
 
 interface CountSlice {
-    count: number
+    count: number;
     setCount: (count: number) => void;
     increment: () => void;
     decrement: () => void;
@@ -14,7 +15,18 @@ const createCountSlice: StateCreator<CountSlice, [], []> = (set) => ({
     decrement: () => set(({count}) => ({count: count - 1})),
 })
 
-export const useStore = create<CountSlice>()((...a) => ({
+interface UserSlice {
+    user: UserData | null;
+    setUser: (user: UserData) => void; 
+}
+
+const createUserSlice: StateCreator<UserSlice> = (set) => ({
+    user: null,
+    setUser: (newUser) => set({user: newUser})
+})
+
+export const useStore = create<CountSlice & UserSlice>()((...a) => ({
     ...createCountSlice(...a),
+    ...createUserSlice(...a),
 }))
 export default useStore;
