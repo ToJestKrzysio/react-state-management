@@ -1,8 +1,8 @@
-import {Link} from "react-router-dom";
-import {useUserContext} from "../context/useUser.ts";
+import { Link } from "react-router-dom";
+import useStore from "../store.ts";
 
 export default function Navbar() {
-    const {user} = useUserContext();
+    const { user } = useStore();
 
 
     return (

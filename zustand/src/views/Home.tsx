@@ -1,7 +1,7 @@
-import {useCountContext} from "../context/useCount.ts";
+import useStore from "../store.ts";
 
 export default function Home() {
-    const {count, increment} = useCountContext();
+    const { count, increment } = useStore();
 
     return <div className="flex h-full w-full flex-col items-center justify-center text-white">
         <h1 className="text-xl mb-3">Current count is</h1>
