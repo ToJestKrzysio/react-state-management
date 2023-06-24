@@ -1,7 +1,7 @@
-import {useCountContext} from "../context/useCount.ts";
+import { useCount } from "../atoms/useCount";
 
 export default function Counter() {
-    const {count, increment, decrement, setCount} = useCountContext();
+    const { count, increment, decrement, setCount } = useCount();
 
     return (
         <div className="flex h-full w-full flex-col items-center justify-center text-white">

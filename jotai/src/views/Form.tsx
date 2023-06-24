@@ -1,26 +1,27 @@
-import {FieldError, useForm, UseFormRegisterReturn} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {ForwardedRef, forwardRef, HTMLInputTypeAttribute, useId} from "react";
-import {UserData, userDataValidator} from "../types.ts";
-import {useUserContext} from "../context/useUser.ts";
+import { FieldError, useForm, UseFormRegisterReturn } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ForwardedRef, forwardRef, HTMLInputTypeAttribute, useId } from "react";
+import { UserData, userDataValidator } from "../types.ts";
+import { useUser } from "../atoms/useUser.ts";
 
 
 export default function Form() {
-    const {user, setUser} = useUserContext();
+    const { user, setUser } = useUser();
+
     const {
         register,
         handleSubmit,
-        formState: {errors}
+        formState: { errors }
     } = useForm<UserData>({
         resolver: zodResolver(userDataValidator),
-        defaultValues: user || {firstName: "", age: NaN},
+        defaultValues: user || { firstName: "", age: NaN },
     })
 
     return (
         <div className="flex h-full w-full items-center justify-center text-white">
             <form className="flex flex-col gap-y-2 w-[500px]" onSubmit={handleSubmit(setUser)}>
-                <Input label="First Name" error={errors.firstName} {...register("firstName")}/>
-                <Input type="number" label="Age" error={errors.age} {...register("age")}/>
+                <Input label="First Name" error={errors.firstName} {...register("firstName")} />
+                <Input type="number" label="Age" error={errors.age} {...register("age")} />
 
                 <button
                     type="submit"
@@ -42,7 +43,7 @@ interface InputProps<T extends string> extends UseFormRegisterReturn<T> {
 }
 
 const Input = forwardRef(function <T extends string>(
-    {label, error, type, ...others}: InputProps<T>,
+    { label, error, type, ...others }: InputProps<T>,
     ref: ForwardedRef<HTMLFieldSetElement>
 ) {
     const id = useId()
@@ -58,7 +59,7 @@ const Input = forwardRef(function <T extends string>(
                     <label htmlFor={id} className="text-sm">{label}</label>
                 </legend>
                 <input {...others} id={id} type={type}
-                       className="w-full bg-transparent pb-2 outline-none text-white"
+                    className="w-full bg-transparent pb-2 outline-none text-white"
                 />
             </fieldset>
             <span className="flex h-5 items-center text-red-500">{error && error.message}</span>
